@@ -8,7 +8,14 @@ const departDate = ref('')
 const returnDate = ref('') 
 
 function handleFormSubmit() {
-  router.push({ path: '/new-trip' })
+  router.push({ 
+    path: '/new-trip',
+    query: {
+      destination: destination.value,
+      departDate: departDate.value,
+      returnDate: returnDate.value
+    }
+   })
 }
 </script>
 
