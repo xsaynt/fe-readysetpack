@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const destination = ref(route.query.destination || '')
@@ -12,17 +12,24 @@ const budget = ref('')
 const destinationCurrency = ref('')
 const amountOfTravellers = ref('')
 
+const router = useRouter()
 function handleFormSubmit() {
-    console.log('New Trip Data:', {
-        destination: destination.value,
-        departDate: departDate.value,
-        returnDate: returnDate.value,
-        passportOrigin: passportOrigin.value,
-        budget: budget.value,
-        destinationCurrency: destinationCurrency.value,
-        amountOfTravellers: amountOfTravellers.value
-    })
+  const newTrip = {
+    id: Date.now().toString(),
+    destination: destination.value,
+    departDate: departDate.value,
+    returnDate: returnDate.value,
+    passportOrigin: passportOrigin.value,
+    budget: budget.value,
+    destinationCurrency: destinationCurrency.value,
+    amountOfTravellers: amountOfTravellers.value
+  }
+  router.push({
+    name: 'currentTrips',
+    state: { newTrip },
+  });
 }
+
 </script>
 
 <template>
@@ -102,7 +109,7 @@ function handleFormSubmit() {
         type="submit"
         class="w-full bg-blue-500 hover:bg-blue-600 text-white font-semibold py-2 px-4 rounded-md"
       >
-        Show me my trip report!
+        Submit trip details
       </button>
     </form>
   </div>

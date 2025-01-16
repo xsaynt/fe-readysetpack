@@ -17,7 +17,9 @@ function toggleDropdown() {
 <template>
   <header class="flex justify-between items-center px-6 py-4 bg-gray-100 shadow-md dark:bg-black">
     <div class="flex items-center gap-4">
-      <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">ReadySetPack</h1>
+      <h1 class="text-xl font-bold text-gray-800 dark:text-gray-200">
+        <router-link to="/">ReadySetPack</router-link>
+      </h1>
     </div>
     <div class="flex items-center gap-6">
       <button
