@@ -40,18 +40,27 @@
       <p v-if="convertF && convertT">
         Converting from {{ convertF }} to {{ convertT }}
       </p>
-      <p v-if="numOfPeople">
-        Number of travelers: {{ numOfPeople }}
-      </p>
+      <p v-if="numOfPeople">Number of travelers: {{ numOfPeople }}</p>
       <p v-if="maxBudget">
-        Considering a budget of: <strong>{{ maxBudget}} {{ convertT }}(s) </strong> your daily expenditure per person will be roughly
+        Considering a budget of:
+        <strong>{{ maxBudget }} {{ convertT }}(s) </strong> your daily
+        expenditure per person will be roughly
       </p>
 
       <br />
       <br />
       <h2><strong>Weather/Temperature</strong></h2>
-      <p v-if="maxBudget">
-        Considering a budget of: <strong>{{ maxBudget}} {{ convertT }}(s) </strong> your daily expenditure per person will be roughly
+      <p v-if="weatherInfo">
+        Average forcast for the next 7 days
+        <ul>
+    <li v-for="([date, temp], index) in Object.entries(weatherInfo.temps)" :key="index">
+      {{ date }}: {{ temp }}°C
+    </li>
+  </ul>
+      </p>
+      <p v-if="weatherInfo">
+        Time relative to GMT:
+        {{ weatherInfo.time }}
       </p>
 
       <!-- Loading message while data is being fetched -->
@@ -65,80 +74,102 @@
 </template>
 
 <script lang="ts">
-import { getVisaRequirements } from "../../service/apiService";
+import { getVisaRequirements, getWeather } from "../../service/apiService";
 import type { AxiosResponse } from "axios";
-import { countries, currencies } from "../data/data";
+import { countries, currencies, coordinates } from "../data/data";
 
 interface VisaReq {
   passport: {
     name: string;
     code: string;
-  },
+  };
   destination: {
     name: string;
     code: string;
-  },
+  };
   category: {
     name: string;
     code: string;
-  },
-  dur: string,
-  last_updated: string
-
+  };
+  dur: string;
+  last_updated: string;
 }
 
 const visaReq: VisaReq = {
   passport: {
-    name: '',
-    code: ''
+    name: "",
+    code: "",
   },
   destination: {
-    name: '',
-    code: ''
+    name: "",
+    code: "",
   },
   category: {
-    name: '',
-    code: ''
+    name: "",
+    code: "",
   },
-  dur: '',
-  last_updated: ''
-
+  dur: "",
+  last_updated: "",
 };
 export default {
   data() {
     return {
       countries: countries,
+      coordinates: coordinates,
       currencies: currencies,
       visaReq: visaReq,
       departing: "",
+      arriving: "",
       errorMessage: "",
       convertF: "",
       convertT: "",
       numOfPeople: "",
       maxBudget: "",
-      
+      weatherInfo: {temps:{}, time:""},
     };
   },
 
   created() {
     // Fetch the selected values from the query params
-    const { departingFrom, currentPassport, arrivingAt, convertFrom, convertTo, numberOfTravelers, budget } = this.$route.query;
+    const {
+      departingFrom,
+      currentPassport,
+      arrivingAt,
+      convertFrom,
+      convertTo,
+      numberOfTravelers,
+      budget,
+    } = this.$route.query;
     console.log(departingFrom, currentPassport, arrivingAt);
 
     // Validate the form fields
-    if (!departingFrom || !currentPassport || !arrivingAt || !convertFrom || !convertTo || !numberOfTravelers || !budget) {
+    if (
+      !departingFrom ||
+      !currentPassport ||
+      !arrivingAt ||
+      !convertFrom ||
+      !convertTo ||
+      !numberOfTravelers ||
+      !budget
+    ) {
       this.errorMessage = "Please fill out all fields before proceeding.";
     } else {
-      // Call the fetchReq method using these values
 
       this.departing = String(departingFrom);
       this.convertF = String(convertFrom);
-    this.convertT = String(convertTo);
-    this.numOfPeople = String(numberOfTravelers);
-    this.maxBudget = String(budget);
+      this.convertT = String(convertTo);
+      this.numOfPeople = String(numberOfTravelers);
+      this.maxBudget = String(budget);
+      this.arriving = String(arrivingAt);
+      
       this.fetchReq(
         this.countries[currentPassport as keyof typeof this.countries],
         this.countries[arrivingAt as keyof typeof this.countries]
+      );
+
+      this.fetchWeather(
+        String(this.coordinates[this.arriving][0]),
+        String(this.coordinates[this.arriving][1])
       );
     }
   },
@@ -150,7 +181,7 @@ export default {
           country1,
           country2
         );
-        this.visaReq = response.data; // Access the data from the Axios response
+        this.visaReq = response.data; 
         if (this.visaReq.dur === null) {
           this.visaReq.dur = "Flexible";
         }
@@ -158,18 +189,30 @@ export default {
         console.error(error);
       }
     },
-    // validateAndFetch() {
-    //   const { departingFrom, currentPassport, arrivingAt, convertFrom, convertTo, numberOfTravelers, budget } = this.$route.query;
-    //   if (!departingFrom || !currentPassport || !arrivingAt || !convertFrom || !convertTo || !numberOfTravelers || !budget) {
-    //     this.errorMessage = "Please fill out all fields before proceeding.";
-    //   } else {
-    //     this.errorMessage = ""; // Clear any previous error message
-    //     this.fetchReq(
-    //       this.countries[String(currentPassport)],
-    //       this.countries[String(arrivingAt)]
-    //     );
-    //   }
-    // },
+
+    async fetchWeather(lat: string, lon: string) {
+      try {
+        const response: AxiosResponse = await getWeather(lat, lon);
+        const maxTemps: number[] = response.data.daily.temperature_2m_max;
+        const minTemps: number[] = response.data.daily.temperature_2m_min;
+        const days: string[] = response.data.daily.time;
+        const dayTemp: { [key: string]: number } = {};
+        const relativeToGMT: string = response.data.timezone_abbreviation
+
+
+        for (let i = 0; i < 7; i++) {
+          const dailyAverageTemp = parseFloat(
+            ((maxTemps[i] + minTemps[i]) / 2).toFixed(2)
+          );
+          dayTemp[days[i]] = dailyAverageTemp;
+        }
+        console.log(dayTemp);
+
+        this.weatherInfo = {temps: dayTemp, time: relativeToGMT};
+      } catch (error) {
+        console.error(error);
+      }
+    },
   },
 };
 </script>
