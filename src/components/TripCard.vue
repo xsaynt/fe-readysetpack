@@ -38,7 +38,16 @@ const {
 const router = useRouter()
 
 function goToTripReport() {
-  router.push({ name: 'tripReport', params: { id } })
+  router.push({ name: 'tripReport', params: { id }, state: {
+      id,
+      destination,
+      dates,
+      passportOrigin,
+      budget,
+      destinationCurrency,
+      currentCurrency,
+      amountOfTravellers
+    } })
 }
 
 function goToChecklist() {

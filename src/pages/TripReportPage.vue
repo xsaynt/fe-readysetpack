@@ -1,11 +1,15 @@
 <script setup lang="ts">
 import { onMounted, ref } from 'vue';
-import { useRoute } from 'vue-router';
+import { useRoute, useRouter } from 'vue-router';
 import type { TripReport } from '@/types/index'
 
 const route = useRoute();
 const tripId = route.params.id;
 const tripReport = ref<TripReport | null>(null);
+const router = useRouter()
+const tripDetails = router.options.history.state
+
+console.log(tripDetails)
 
 onMounted(() => {
   tripReport.value = {
