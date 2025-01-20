@@ -20,7 +20,7 @@ const { id, destination, dates, fullInfo } = defineProps({
     image: String,
     destination: String,
     dates: String,
-    fullInfo: FullInfo;
+    fullInfo: FullInfo
 })
 
 const router = useRouter()
