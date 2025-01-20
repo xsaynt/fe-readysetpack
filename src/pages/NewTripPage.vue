@@ -20,7 +20,6 @@ const destination = ref(route.query.destination || '')
 const departDate = ref(route.query.departDate || '')
 const returnDate = ref(route.query.returnDate || '')
 
-
 const passportOrigin = ref('')
 const budget = ref('')
 const currentCurrency = ref('')
@@ -31,58 +30,69 @@ const router = useRouter()
 async function handleFormSubmit() {
   console.log(destination.value)
   const newTrip = {
-    id: "1",
-    destination: {city: "", country: countriesList[destination.value], currency: currenciesList[destinationCurrency.value]}, // {city: "string country code", country: "NE", currency: "EUR"}
+    id: 1,
+    destination: {
+      city: '',
+      country: countriesList[destination.value],
+      currency: currenciesList[destinationCurrency.value],
+    }, // {city: "string country code", country: "NE", currency: "EUR"}
     departDate: departDate.value,
     returnDate: returnDate.value,
     passportOrigin: countriesList[passportOrigin.value],
-    budget: {current_amount: budget.value,  current_currency: currenciesList[currentCurrency.value], destination_currency: currenciesList[destinationCurrency.value]},
-    amountOfTravellers: amountOfTravellers.value
+    budget: {
+      current_amount: budget.value,
+      current_currency: currenciesList[currentCurrency.value],
+      destination_currency: currenciesList[destinationCurrency.value],
+    },
+    amountOfTravellers: amountOfTravellers.value,
   }
-  console.log("trip to push is ", newTrip)
+  console.log('trip to push is ', newTrip)
   try {
-    
-    const response = await postTripInfo(newTrip);
-    console.log("Trip successfully posted:", response.data);
+    const response = await postTripInfo(newTrip)
+    console.log('Trip successfully posted:', response.data)
   } catch (error) {
-    console.error("Error posting trip:", error);
+    console.error('Error posting trip:', error)
   }
 
-  
   router.push({
     name: 'currentTrips',
     state: { newTrip },
-  });
+  })
 }
-
 </script>
 
 <template>
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col items-center py-8">
     <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-6">Create A New Trip</h1>
-    <form @submit.prevent="handleFormSubmit" class="w-full max-w-lg space-y-6 bg-white dark:bg-gray-800 p-6 rounded-md shadow-md">
-     
+    <form
+      @submit.prevent="handleFormSubmit"
+      class="w-full max-w-lg space-y-6 bg-white dark:bg-gray-800 p-6 rounded-md shadow-md"
+    >
       <div>
-        <label for="destination" class="block text-gray-700 dark:text-gray-300 mb-1">Destination</label>
+        <label for="destination" class="block text-gray-700 dark:text-gray-300 mb-1"
+          >Destination</label
+        >
         <!-- <input
           id="destination"
           v-model="destination"
           type="text"
           class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
         /> -->
-        <select v-model="destination"  id="destination" class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-      <option
-        v-for="(code, country) in countriesList"
-        :key="country"
-        :value="country"
-      >
-        {{ country }}
-      </option>
-    </select>
+        <select
+          v-model="destination"
+          id="destination"
+          class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+        >
+          <option v-for="(code, country) in countriesList" :key="country" :value="country">
+            {{ country }}
+          </option>
+        </select>
       </div>
       <div class="flex gap-4">
         <div class="flex-1">
-          <label for="departDate" class="block text-gray-700 dark:text-gray-300 mb-1">Departure Date</label>
+          <label for="departDate" class="block text-gray-700 dark:text-gray-300 mb-1"
+            >Departure Date</label
+          >
           <input
             id="departDate"
             v-model="departDate"
@@ -91,7 +101,9 @@ async function handleFormSubmit() {
           />
         </div>
         <div class="flex-1">
-          <label for="returnDate" class="block text-gray-700 dark:text-gray-300 mb-1">Return Date</label>
+          <label for="returnDate" class="block text-gray-700 dark:text-gray-300 mb-1"
+            >Return Date</label
+          >
           <input
             id="returnDate"
             v-model="returnDate"
@@ -101,13 +113,19 @@ async function handleFormSubmit() {
         </div>
       </div>
       <div>
-        <label for="passportOrigin" class="block text-gray-700 dark:text-gray-300 mb-1">Passport Issuing Country</label>
-        <select id="passportOrigin" v-model="passportOrigin" class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-      <option v-for="(code, country) in countriesList" :key="code" :value="country">
-        {{ country }} ({{ code }})
-      </option>
-    </select>
-        
+        <label for="passportOrigin" class="block text-gray-700 dark:text-gray-300 mb-1"
+          >Passport Issuing Country</label
+        >
+        <select
+          id="passportOrigin"
+          v-model="passportOrigin"
+          class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+        >
+          <option v-for="(code, country) in countriesList" :key="code" :value="country">
+            {{ country }} ({{ code }})
+          </option>
+        </select>
+
         <!-- <input
           id="passportOrigin"
           v-model="passportOrigin"
@@ -127,30 +145,34 @@ async function handleFormSubmit() {
         />
       </div>
       <div>
-        <label for="currentCurrency" class="block text-gray-700 dark:text-gray-300 mb-1">Converting Currency From</label>
-        <select id="currentCurrency" v-model="currentCurrency" class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-      <option
-        v-for="(code, country) in currenciesList"
-        :key="code"
-        :value="country"
-      >
-        {{ country }} ({{ code }})
-      </option>
-    </select>
+        <label for="currentCurrency" class="block text-gray-700 dark:text-gray-300 mb-1"
+          >Converting Currency From</label
+        >
+        <select
+          id="currentCurrency"
+          v-model="currentCurrency"
+          class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+        >
+          <option v-for="(code, country) in currenciesList" :key="code" :value="country">
+            {{ country }} ({{ code }})
+          </option>
+        </select>
       </div>
       <div>
-        <label for="destinationCurrency" class="block text-gray-700 dark:text-gray-300 mb-1">Currency of Destination</label>
-        
-        <select id="destinationCurrency" v-model="destinationCurrency" class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
-      <option
-        v-for="(code, country) in currenciesList"
-        :key="code"
-        :value="country"
-      >
-        {{ country }} ({{ code }})
-      </option>
-    </select>
-        
+        <label for="destinationCurrency" class="block text-gray-700 dark:text-gray-300 mb-1"
+          >Currency of Destination</label
+        >
+
+        <select
+          id="destinationCurrency"
+          v-model="destinationCurrency"
+          class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+        >
+          <option v-for="(code, country) in currenciesList" :key="code" :value="country">
+            {{ country }} ({{ code }})
+          </option>
+        </select>
+
         <!-- <input
           id="destinationCurrency"
           v-model="destinationCurrency"
@@ -160,7 +182,9 @@ async function handleFormSubmit() {
         /> -->
       </div>
       <div>
-        <label for="amountOfTravellers" class="block text-gray-700 dark:text-gray-300 mb-1">Amount of Travellers</label>
+        <label for="amountOfTravellers" class="block text-gray-700 dark:text-gray-300 mb-1"
+          >Amount of Travellers</label
+        >
         <input
           id="amountOfTravellers"
           v-model="amountOfTravellers"
