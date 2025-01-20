@@ -9,9 +9,9 @@ const router = useRouter();
 const trips = ref([
   {
     id: '1',
-    destination: 'Paris, France',
-    departDate: '2025-02-15',
-    returnDate: '2025-02-22',
+    destination: 'Paris, France', // object
+    departDate: '2025-02-15', // start date
+    returnDate: '2025-02-22', // end date
     passportOrigin: 'GB',
     budget: 500,
     destinationCurrency: 'GBP',
