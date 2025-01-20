@@ -61,6 +61,7 @@ onMounted(() => {
         :id="trip.id"
         :destination="trip.destination"
         :dates="`${trip.departDate} to ${trip.returnDate}`"
+        :fullInfo = "trip"
       />
     </div>
   </div>

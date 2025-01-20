@@ -2,17 +2,31 @@
 import { useRouter } from 'vue-router'
 import { defineProps } from 'vue'
 
-const { id, destination, dates } = defineProps({
+
+type FullInfo = {
+    id: string;
+    destination: string;
+    departDate: string;
+    returnDate: string;
+    passportOrigin: string;
+    budget: number;
+    currentCurrency: string;
+    destinationCurrency: string;
+    amountOfTravellers: number;
+};
+
+const { id, destination, dates, fullInfo } = defineProps({
     id: String,
     image: String,
     destination: String,
     dates: String,
+    fullInfo: FullInfo;
 })
 
 const router = useRouter()
 
 function goToTripReport() {
-    router.push({ name: 'tripReport', params: { id } })
+    router.push({ name: 'tripReport', params: { id, fullInfo } })
 }
 
 function goToChecklist() {
