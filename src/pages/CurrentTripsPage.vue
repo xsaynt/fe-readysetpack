@@ -14,7 +14,8 @@ const trips = ref([
     returnDate: '2025-02-22', // end date
     passportOrigin: 'GB',
     budget: 500,
-    destinationCurrency: 'GBP',
+    currentCurrency: 'GBP',
+    destinationCurrency: 'EUR',
     amountOfTravellers: 3
   },
   {
@@ -24,7 +25,8 @@ const trips = ref([
     returnDate: '2025-03-10',
     passportOrigin: 'FR',
     budget: 250,
-    destinationCurrency: 'EUR',
+    currentCurrency: 'EUR',
+    destinationCurrency: 'YEN',
     amountOfTravellers: 1
   },
 ])
