@@ -2,17 +2,17 @@
 import { useRouter } from 'vue-router'
 import { defineProps } from 'vue'
 
-type FullInfo = {
-  id: string
-  destination: string
-  departDate: string
-  returnDate: string
-  passportOrigin: string
-  budget: number
-  currentCurrency: string
-  destinationCurrency: string
-  amountOfTravellers: number
-}
+// type FullInfo = {
+//   id: string
+//   destination: string
+//   departDate: string
+//   returnDate: string
+//   passportOrigin: string
+//   budget: number
+//   currentCurrency: string
+//   destinationCurrency: string
+//   amountOfTravellers: number
+// }
 
 const {
   id,
