@@ -2,35 +2,47 @@
 import { useRouter } from 'vue-router'
 import { defineProps } from 'vue'
 
-
 type FullInfo = {
-    id: string;
-    destination: string;
-    departDate: string;
-    returnDate: string;
-    passportOrigin: string;
-    budget: number;
-    currentCurrency: string;
-    destinationCurrency: string;
-    amountOfTravellers: number;
-};
+  id: string
+  destination: string
+  departDate: string
+  returnDate: string
+  passportOrigin: string
+  budget: number
+  currentCurrency: string
+  destinationCurrency: string
+  amountOfTravellers: number
+}
 
-const { id, destination, dates } = defineProps({
-    id: String,
-    image: String,
-    destination: String,
-    dates: String,
-  
+const {
+  id,
+  destination,
+  dates,
+  passportOrigin,
+  budget,
+  destinationCurrency,
+  currentCurrency,
+  amountOfTravellers,
+} = defineProps({
+  id: String,
+  image: String,
+  destination: String,
+  dates: String,
+  passportOrigin: String,
+  budget: Number,
+  destinationCurrency: String,
+  currentCurrency: String,
+  amountOfTravellers: Number,
 })
 
 const router = useRouter()
 
 function goToTripReport() {
-    router.push({ name: 'tripReport', params: { id } })
+  router.push({ name: 'tripReport', params: { id } })
 }
 
 function goToChecklist() {
-    router.push({ name: 'tripChecklist', params: { id }})
+  router.push({ name: 'tripChecklist', params: { id } })
 }
 </script>
 
