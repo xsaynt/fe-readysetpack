@@ -2,6 +2,7 @@
 import { ref } from 'vue'
 import { countries, currencies } from './data/data'
 import { useRoute, useRouter } from 'vue-router'
+import { postTripInfo } from './service/apiService'
 
 /*
 user_id = 1
@@ -27,16 +28,27 @@ const destinationCurrency = ref('')
 const amountOfTravellers = ref('')
 
 const router = useRouter()
-function handleFormSubmit() {
+async function handleFormSubmit() {
+  console.log(destination.value)
   const newTrip = {
-    id: 1,
-    destination: {city: "", country: countriesList[destination.value], currency: currenciesList[currentCurrency.value]}, // {city: "string country code", country: "NE", currency: "EUR"}
+    id: "1",
+    destination: {city: "", country: countriesList[destination.value], currency: currenciesList[destinationCurrency.value]}, // {city: "string country code", country: "NE", currency: "EUR"}
     departDate: departDate.value,
     returnDate: returnDate.value,
     passportOrigin: countriesList[passportOrigin.value],
     budget: {current_amount: budget.value,  current_currency: currenciesList[currentCurrency.value], destination_currency: currenciesList[destinationCurrency.value]},
     amountOfTravellers: amountOfTravellers.value
   }
+  console.log("trip to push is ", newTrip)
+  try {
+    
+    const response = await postTripInfo(newTrip);
+    console.log("Trip successfully posted:", response.data);
+  } catch (error) {
+    console.error("Error posting trip:", error);
+  }
+
+  
   router.push({
     name: 'currentTrips',
     state: { newTrip },
