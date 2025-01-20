@@ -1,11 +1,14 @@
 <script setup lang="ts">
 import { ref } from 'vue'
+import { countries } from './data/data'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
+const countriesList = countries
 const destination = ref(route.query.destination || '')
 const departDate = ref(route.query.departDate || '')
 const returnDate = ref(route.query.returnDate || '')
+
 
 const passportOrigin = ref('')
 const budget = ref('')
@@ -36,14 +39,24 @@ function handleFormSubmit() {
   <div class="min-h-screen bg-gray-50 dark:bg-gray-900 flex flex-col items-center py-8">
     <h1 class="text-3xl font-bold text-gray-800 dark:text-gray-200 mb-6">Create A New Trip</h1>
     <form @submit.prevent="handleFormSubmit" class="w-full max-w-lg space-y-6 bg-white dark:bg-gray-800 p-6 rounded-md shadow-md">
+     
       <div>
         <label for="destination" class="block text-gray-700 dark:text-gray-300 mb-1">Destination</label>
-        <input
+        <!-- <input
           id="destination"
           v-model="destination"
           type="text"
           class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-        />
+        /> -->
+        <select v-model="destination"  id="destination" class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+      <option
+        v-for="(code, country) in countriesList"
+        :key="country"
+        :value="country"
+      >
+        {{ country }}
+      </option>
+    </select>
       </div>
       <div class="flex gap-4">
         <div class="flex-1">
@@ -67,13 +80,19 @@ function handleFormSubmit() {
       </div>
       <div>
         <label for="passportOrigin" class="block text-gray-700 dark:text-gray-300 mb-1">Passport Issuing Country</label>
-        <input
+        <select id="passportOrigin" v-model="passportOrigin" class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+      <option v-for="(code, country) in countriesList" :key="code" :value="country">
+        {{ country }} ({{ code }})
+      </option>
+    </select>
+        
+        <!-- <input
           id="passportOrigin"
           v-model="passportOrigin"
           type="text"
           placeholder="Country of Passport"
           class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-        />
+        /> -->
       </div>
       <div>
         <label for="budget" class="block text-gray-700 dark:text-gray-300 mb-1">Budget</label>
