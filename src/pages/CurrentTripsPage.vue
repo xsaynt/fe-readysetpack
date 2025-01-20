@@ -33,6 +33,7 @@ onMounted(() => {
   const state = router.options.history.state as unknown as TripState
   if (state && state.newTrip) {
     const newTrip = state.newTrip
+    console.log(newTrip, "here after submit")
     trips.value.push({
         id: newTrip.id,
         destination: newTrip.destination,
@@ -41,6 +42,7 @@ onMounted(() => {
         passportOrigin: newTrip.passportOrigin,
         budget: newTrip.budget,
         destinationCurrency: newTrip.destinationCurrency,
+        currentCurrency: newTrip.currentCurrency,
         amountOfTravellers: newTrip.amountOfTravellers
     })
   }
