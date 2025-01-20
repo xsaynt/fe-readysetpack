@@ -1,10 +1,11 @@
 <script setup lang="ts">
 import { ref } from 'vue'
-import { countries } from './data/data'
+import { countries, currencies } from './data/data'
 import { useRoute, useRouter } from 'vue-router'
 
 const route = useRoute()
 const countriesList = countries
+const currenciesList = currencies
 const destination = ref(route.query.destination || '')
 const departDate = ref(route.query.departDate || '')
 const returnDate = ref(route.query.returnDate || '')
@@ -12,6 +13,7 @@ const returnDate = ref(route.query.returnDate || '')
 
 const passportOrigin = ref('')
 const budget = ref('')
+const currentCurrency = ref('')
 const destinationCurrency = ref('')
 const amountOfTravellers = ref('')
 
@@ -25,6 +27,7 @@ function handleFormSubmit() {
     passportOrigin: passportOrigin.value,
     budget: budget.value,
     destinationCurrency: destinationCurrency.value,
+    currentCurrency: currentCurrency.value,
     amountOfTravellers: amountOfTravellers.value
   }
   router.push({
@@ -105,14 +108,37 @@ function handleFormSubmit() {
         />
       </div>
       <div>
+        <label for="currentCurrency" class="block text-gray-700 dark:text-gray-300 mb-1">Converting Currency From</label>
+        <select id="currentCurrency" v-model="currentCurrency" class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+      <option
+        v-for="(code, country) in currenciesList"
+        :key="code"
+        :value="country"
+      >
+        {{ country }} ({{ code }})
+      </option>
+    </select>
+      </div>
+      <div>
         <label for="destinationCurrency" class="block text-gray-700 dark:text-gray-300 mb-1">Currency of Destination</label>
-        <input
+        
+        <select id="destinationCurrency" v-model="destinationCurrency" class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200">
+      <option
+        v-for="(code, country) in currenciesList"
+        :key="code"
+        :value="country"
+      >
+        {{ country }} ({{ code }})
+      </option>
+    </select>
+        
+        <!-- <input
           id="destinationCurrency"
           v-model="destinationCurrency"
           type="text"
           placeholder="Currency"
           class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
-        />
+        /> -->
       </div>
       <div>
         <label for="amountOfTravellers" class="block text-gray-700 dark:text-gray-300 mb-1">Amount of Travellers</label>
