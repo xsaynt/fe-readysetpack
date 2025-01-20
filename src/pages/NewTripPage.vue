@@ -3,6 +3,15 @@ import { ref } from 'vue'
 import { countries, currencies } from './data/data'
 import { useRoute, useRouter } from 'vue-router'
 
+/*
+user_id = 1
+start_date: "string 25/01/2025"
+end_date: "string 25/01/2025"
+passport_issued_country: "string country code"
+destination: {city: "string country code", country: "NE", currency: "EUR"}
+people_count: integer
+budget: {current_amount: 1000, current_currency: "string", destination_currency: "string"} 
+*/
 const route = useRoute()
 const countriesList = countries
 const currenciesList = currencies
@@ -20,14 +29,12 @@ const amountOfTravellers = ref('')
 const router = useRouter()
 function handleFormSubmit() {
   const newTrip = {
-    id: Date.now().toString(),
-    destination: destination.value,
+    id: 1,
+    destination: {city: "", country: countriesList[destination.value], currency: currenciesList[currentCurrency.value]}, // {city: "string country code", country: "NE", currency: "EUR"}
     departDate: departDate.value,
     returnDate: returnDate.value,
-    passportOrigin: passportOrigin.value,
-    budget: budget.value,
-    destinationCurrency: destinationCurrency.value,
-    currentCurrency: currentCurrency.value,
+    passportOrigin: countriesList[passportOrigin.value],
+    budget: {current_amount: budget.value,  current_currency: currenciesList[currentCurrency.value], destination_currency: currenciesList[destinationCurrency.value]},
     amountOfTravellers: amountOfTravellers.value
   }
   router.push({
