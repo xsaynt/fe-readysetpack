@@ -5,7 +5,6 @@ import type { TripReport } from '@/types/index'
 
 const route = useRoute();
 const tripId = route.params.id;
-
 const tripReport = ref<TripReport | null>(null);
 
 onMounted(() => {

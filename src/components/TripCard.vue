@@ -15,18 +15,18 @@ type FullInfo = {
     amountOfTravellers: number;
 };
 
-const { id, destination, dates, fullInfo } = defineProps({
+const { id, destination, dates } = defineProps({
     id: String,
     image: String,
     destination: String,
     dates: String,
-    fullInfo: FullInfo
+  
 })
 
 const router = useRouter()
 
 function goToTripReport() {
-    router.push({ name: 'tripReport', params: { id, fullInfo } })
+    router.push({ name: 'tripReport', params: { id } })
 }
 
 function goToChecklist() {
