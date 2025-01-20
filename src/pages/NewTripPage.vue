@@ -30,15 +30,14 @@ const router = useRouter()
 async function handleFormSubmit() {
   console.log(destination.value)
   const newTrip = {
-    id: 1,
     destination: {
-      city: '',
+      city: 'N/A',
       country: countriesList[destination.value],
       currency: currenciesList[destinationCurrency.value],
     }, // {city: "string country code", country: "NE", currency: "EUR"}
-    departDate: departDate.value,
-    returnDate: returnDate.value,
-    passportOrigin: countriesList[passportOrigin.value],
+    "start_date": departDate.value,
+    "end_date": returnDate.value,
+    "passport_issued_country": countriesList[passportOrigin.value],
     budget: {
       current_amount: budget.value,
       current_currency: currenciesList[currentCurrency.value],
