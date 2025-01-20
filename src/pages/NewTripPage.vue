@@ -29,9 +29,10 @@ const amountOfTravellers = ref('')
 const router = useRouter()
 async function handleFormSubmit() {
   console.log(destination.value)
+
   const newTrip = {
     destination: {
-      city: 'N/A',
+      city: 'Paris',
       country: countriesList[destination.value],
       currency: currenciesList[destinationCurrency.value],
     }, // {city: "string country code", country: "NE", currency: "EUR"}
@@ -43,8 +44,10 @@ async function handleFormSubmit() {
       current_currency: currenciesList[currentCurrency.value],
       destination_currency: currenciesList[destinationCurrency.value],
     },
-    amountOfTravellers: amountOfTravellers.value,
+    people_count: amountOfTravellers.value,
+    daily_expected_cost: 300,
   }
+
   console.log('trip to push is ', newTrip)
   try {
     const response = await postTripInfo(newTrip)

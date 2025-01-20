@@ -11,7 +11,7 @@ const weatherClient = axios.create({
 });
 
 const backendClient = axios.create({
-  baseURL: 'https://be-readysetpack.onrender.com/api/'
+  baseURL: 'https://be-readysetpack.onrender.com/api'
 })
 
 export function getVisaRequirements(passportCountry: string, destinationCountry: string): Promise<AxiosResponse<unknown>> {
