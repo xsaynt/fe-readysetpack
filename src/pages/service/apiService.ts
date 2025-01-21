@@ -29,3 +29,7 @@ export function getWeather(latitude: string, longitude: string):Promise<AxiosRes
 export function postTripInfo(tripData: object):Promise<AxiosResponse<unknown>> {
   return backendClient.post(`/trips/1`, tripData)
 }
+
+export function getTripInfo():Promise<AxiosResponse<unknown>> {
+  return backendClient.get('/trips/1')
+}

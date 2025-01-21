@@ -1,35 +1,13 @@
 <script setup lang="ts">
 import TripCard from '@/components/TripCard.vue'
-import { ref, onMounted } from 'vue';
+import { onMounted } from 'vue';
 import { useRouter } from 'vue-router';
 import type { TripState } from '@/types/index'
+import { getTripInfo } from './service/apiService'
 
 const router = useRouter();
 
-const trips = ref([
-  {
-    id: '1',
-    destination: 'Paris, France', // object
-    departDate: '2025-02-15', // start date
-    returnDate: '2025-02-22', // end date
-    passportOrigin: 'GB',
-    budget: 500,
-    currentCurrency: 'GBP',
-    destinationCurrency: 'EUR',
-    amountOfTravellers: 3
-  },
-  {
-    id: '2',
-    destination: 'Tokyo, Japan',
-    departDate: '2025-03-01',
-    returnDate: '2025-03-10',
-    passportOrigin: 'FR',
-    budget: 250,
-    currentCurrency: 'EUR',
-    destinationCurrency: 'YEN',
-    amountOfTravellers: 1
-  },
-])
+const trips = await getTripInfo() 
 
 onMounted(() => {
   const state = router.options.history.state as unknown as TripState

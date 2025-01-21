@@ -52,14 +52,13 @@ async function handleFormSubmit() {
   try {
     const response = await postTripInfo(newTrip)
     console.log('Trip successfully posted:', response.data)
-  } catch (error) {
-    console.error('Error posting trip:', error)
-  }
-
-  router.push({
+    router.push({
     name: 'currentTrips',
     state: { newTrip },
   })
+  } catch (error) {
+    console.error('Error posting trip:', error)
+  }
 }
 </script>
 
