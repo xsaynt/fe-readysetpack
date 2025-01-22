@@ -6,12 +6,14 @@ import type { TripState } from '@/types/index'
 import { getTripInfo } from './service/apiService'
 
 const router = useRouter()
-const arrOfTrips = ref([])
+let arrOfTrips = ref([])
+
 
 onMounted(async () => {
   const trips = await getTripInfo()
+  console.log("trips is here: ", trips)
   arrOfTrips.value = trips.data.trips
-  console.log(arrOfTrips)
+  console.log(arrOfTrips.value)
 })
 </script>
 
@@ -22,13 +24,15 @@ onMounted(async () => {
       <TripCard
         v-for="trip in arrOfTrips"
         :key="trip.user_id"
+        :city_information = "trip.city_information"
+        :user_id = "trip.user_id"
         :trip_id="trip.trip_id"
         :destination="trip.destination"
         :start_date="`${trip.start_date} to`"
         :end_date="`${trip.end_date}`"
-        :passport_issued_country:="trip.passport_issued_country"
+        :passport_issued_country="trip.passport_issued_country" 
         :budget="trip.budget"
-        :people_count:="trip.people_count"
+        :people_count="trip.people_count"
       />
     </div>
   </div>

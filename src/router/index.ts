@@ -32,6 +32,7 @@ const router = createRouter({
     {
       path: '/trip-report/:trip_id',
       name: 'tripReport',
+      props: true,
       component: TripReportPage,
     },
     {
