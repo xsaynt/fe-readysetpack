@@ -12,32 +12,32 @@ const router = createRouter({
     {
       path: '/',
       name: 'home',
-      component: HomePage
+      component: HomePage,
     },
     {
       path: '/current-trips',
       name: 'currentTrips',
-      component: CurrentTripsPage
+      component: CurrentTripsPage,
     },
     {
       path: '/new-trip',
       name: 'newTrip',
-      component: NewTripPage
+      component: NewTripPage,
     },
     {
       path: '/trip-history',
       name: 'tripHistory',
-      component: TripHistoryPage
+      component: TripHistoryPage,
     },
     {
-      path: '/trip-report/:id',
+      path: '/trip-report/:trip_id',
       name: 'tripReport',
-      component: TripReportPage
+      component: TripReportPage,
     },
     {
       path: '/trip-checklist/:id',
       name: 'tripChecklist',
-      component: TripChecklistPage
+      component: TripChecklistPage,
     },
   ],
 })
