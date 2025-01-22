@@ -15,51 +15,58 @@ import { defineProps } from 'vue'
 // }
 
 const {
-  id,
+  user_id,
+  trip_id,
   destination,
-  dates,
-  passportOrigin,
+  start_date,
+  end_date,
+  passport_issued_country,
   budget,
-  destinationCurrency,
-  currentCurrency,
-  amountOfTravellers,
+  people_count,
 } = defineProps({
-  id: String,
+  user_id: Number,
+  trip_id: Number,
   image: String,
-  destination: String,
-  dates: String,
-  passportOrigin: String,
-  budget: Number,
-  destinationCurrency: String,
-  currentCurrency: String,
-  amountOfTravellers: Number,
+  destination: Object,
+  start_date: String,
+  end_date: String,
+  passport_issued_country: String,
+  budget: Object,
+  people_count: Number,
 })
 
 const router = useRouter()
 
 function goToTripReport() {
-  router.push({ name: 'tripReport', params: { id }, state: {
-      id,
+  router.push({
+    name: 'tripReport',
+    params: { user_id, trip_id },
+    state: {
+      user_id,
+      trip_id,
       destination,
-      dates,
-      passportOrigin,
+      start_date,
+      end_date,
+      passport_issued_country,
       budget,
-      destinationCurrency,
-      currentCurrency,
-      amountOfTravellers
-    } })
+      people_count,
+    },
+  })
 }
 
 function goToChecklist() {
-  router.push({ name: 'tripChecklist', params: { id } })
+  router.push({ name: 'tripChecklist', params: { user_id, trip_id } })
 }
 </script>
 
 <template>
   <div class="p-4 border rounded-md shadow-md bg-white dark:bg-gray-800">
     <!-- <img :src="image" alt="Trip image" class="w-full h-48 object-cover rounded-md mb-4" /> -->
-    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">{{ destination }}</h3>
-    <p class="text-gray-600 dark:text-gray-400">{{ dates }}</p>
+    <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
+      {{ destination.city }}
+    </h3>
+    <p class="text-gray-600 dark:text-gray-400">{{ start_date }}</p>
+    <p class="text-gray-600 dark:text-gray-400">{{ end_date }}</p>
     <div class="mt-4 flex gap-4">
       <button
         @click="goToTripReport"

@@ -29,16 +29,17 @@ const amountOfTravellers = ref('')
 const router = useRouter()
 async function handleFormSubmit() {
   console.log(destination.value)
+  const selectedCountryName = destination.value
 
   const newTrip = {
     destination: {
-      city: 'Paris',
+      city: selectedCountryName,
       country: countriesList[destination.value],
       currency: currenciesList[destinationCurrency.value],
     }, // {city: "string country code", country: "NE", currency: "EUR"}
-    "start_date": departDate.value,
-    "end_date": returnDate.value,
-    "passport_issued_country": countriesList[passportOrigin.value],
+    start_date: departDate.value,
+    end_date: returnDate.value,
+    passport_issued_country: countriesList[passportOrigin.value],
     budget: {
       current_amount: budget.value,
       current_currency: currenciesList[currentCurrency.value],
@@ -53,9 +54,9 @@ async function handleFormSubmit() {
     const response = await postTripInfo(newTrip)
     console.log('Trip successfully posted:', response.data)
     router.push({
-    name: 'currentTrips',
-    state: { newTrip },
-  })
+      name: 'currentTrips',
+      state: { newTrip },
+    })
   } catch (error) {
     console.error('Error posting trip:', error)
   }
