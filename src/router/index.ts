@@ -36,7 +36,7 @@ const router = createRouter({
       component: TripReportPage,
     },
     {
-      path: '/trip-checklist/:id',
+      path: '/trip-checklist/:trip_id',
       name: 'tripChecklist',
       component: TripChecklistPage,
     },
