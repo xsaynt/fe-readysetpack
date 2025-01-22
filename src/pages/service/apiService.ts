@@ -1,13 +1,12 @@
 import axios from 'axios';
 import type { AxiosResponse } from 'axios';
 
-// Create an Axios instance
 const visaClient = axios.create({
-  baseURL: 'https://rough-sun-2523.fly.dev/', // Replace with your API's base URL
+  baseURL: 'https://rough-sun-2523.fly.dev/', 
 });
 
 const weatherClient = axios.create({
-  baseURL: 'https://api.open-meteo.com/v1/', // Replace with your API's base URL
+  baseURL: 'https://api.open-meteo.com/v1/', 
 });
 
 const backendClient = axios.create({
@@ -33,3 +32,8 @@ export function postTripInfo(tripData: object):Promise<AxiosResponse<unknown>> {
 export function getTripInfo():Promise<AxiosResponse<unknown>> {
   return backendClient.get('/trips/1')
 }
+
+export function getTripHistory(userId: number):Promise<AxiosResponse<unknown>> {
+  return backendClient.get('/trips/1')
+}
+
