@@ -36,10 +36,6 @@
               </td>
               <td class="px-4 py-2">{{ trip.start_date }}</td>
               <td class="px-4 py-2">{{ trip.end_date }}</td>
-              <!-- <td class="px-4 py-2">
-                <p class="text-gray-700">{{ trip.weather.weather_type }}</p>
-                <p class="text-sm text-gray-500">{{ trip.weather.temp }}°C</p>
-              </td> -->
               <td class="px-4 py-2">
                 <p>{{ trip.budget.current_amount }} {{ trip.budget.current_currency }}</p>
                 <p class="text-sm text-gray-500">
@@ -48,15 +44,33 @@
                 </p>
               </td>
               <td class="px-4 py-2">
-                <!-- <ul class="list-disc list-inside">
-                  <li
-                    v-for="(landmark, index) in trip.landmarks.best_places_to_visit"
-                    :key="index"
-                  >
-                    {{ landmark }}
-                  </li>
-                </ul> -->
-              </td>
+  <p v-if="trip.weather" class="text-gray-700 font-medium">
+    {{ trip.weather.weather_type }}
+  </p>
+  <p v-if="trip.weather" class="text-sm text-gray-500">
+    Temperature: {{ trip.weather.temp }}°C
+  </p>
+  <p v-else class="text-sm text-gray-400 italic">Weather data not available</p>
+</td>
+
+<td class="px-4 py-2">
+  <div v-if="trip.landmarks">
+    <ul style="list-style: none; padding-left: 0;">
+      <li v-for="(landmark, index) in trip.landmarks.best_places_to_visit" :key="index">
+        <div class="flex items-center space-x-2">
+          <img
+            v-if="trip.landmarks.img_url_of_landmarks && trip.landmarks.img_url_of_landmarks[index]"
+            :src="trip.landmarks.img_url_of_landmarks[index] || 'default-placeholder.jpg'"
+            :alt="landmark"
+            class="w-12 h-12 rounded-md shadow"
+          />
+          <span>{{ landmark }}</span>
+        </div>
+      </li>
+    </ul>
+  </div>
+  <p v-else class="text-sm text-gray-400 italic">No landmarks available</p>
+</td>
             </tr>
           </tbody>
         </table>
@@ -81,8 +95,8 @@
       const error = ref<string | null>(null);
   
       const fetchTrips = (userId: number) => {
-  loading.value = true;
-  error.value = null;
+       loading.value = true;
+       error.value = null;
 
   getTripHistory(userId)
     .then((response) => {
