@@ -1,11 +1,13 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { countries } from './data/data'
 
 const router = useRouter()
 const destination = ref('')
 const departDate = ref('')
 const returnDate = ref('') 
+const countriesList = countries
 
 function handleFormSubmit() {
   router.push({ 
@@ -42,7 +44,7 @@ function handleFormSubmit() {
       <div class="md:w-1/2 p-8 bg-white dark:bg-gray-800 shadow-md rounded-md">
         <h2 class="text-2xl font-semibold text-gray-800 dark:text-gray-200 mb-4">Plan Your Next Adventure</h2>
         <form @submit.prevent="handleFormSubmit" class="space-y-4">
-          <div>
+          <!-- <div>
             <label for="destination" class="block text-gray-700 dark:text-gray-300 mb-1">Where are you going?</label>
             <input
               id="destination"
@@ -51,7 +53,27 @@ function handleFormSubmit() {
               placeholder="Choose your destination"
               class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
             />
-          </div>
+          </div> -->
+          <div>
+        <label for="destination" class="block text-gray-700 dark:text-gray-300 mb-1"
+          >Destination</label
+        >
+        <!-- <input
+          id="destination"
+          v-model="destination"
+          type="text"
+          class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+        /> -->
+        <select
+          v-model="destination"
+          id="destination"
+          class="w-full border border-gray-300 rounded-md p-2 dark:bg-gray-700 dark:border-gray-600 dark:text-gray-200"
+        >
+          <option v-for="(code, country) in countriesList" :key="country" :value="country">
+            {{ country }}
+          </option>
+        </select>
+      </div>
           <div class="flex flex-col md:flex-row gap-4">
             <div class="flex-1">
               <label for="departDate" class="block text-gray-700 dark:text-gray-300 mb-1">Departure Date</label>
