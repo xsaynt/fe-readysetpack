@@ -12,53 +12,6 @@ onMounted(async () => {
   const trips = await getTripInfo()
   arrOfTrips.value = trips.data.trips
   console.log(arrOfTrips)
-
-  // structure of each object in  trips.data.trips
-  //   budget
-  // :
-  // {current_amount: 101, current_currency: 'KYD', destination_amount: 48425.46, destination_currency: 'AMD'}
-  // city_information
-  // :
-  // "Paris (French pronunciation: [paʁi] ) is the capital and largest city of France. With an estimated population of 2,102,650 residents in January 2023 in an area of more than 105 km2 (41 sq mi), Paris is the fourth-most populous city in the European Union, the ninth-most populous city in Europe and the 30th most densely populated city in the world in 2022. Since the 17th century, Paris has been one of the world's major centres of finance, diplomacy, commerce, culture, fashion, and gastronomy."
-  // daily_expected_cost
-  // :
-  // 300
-  // destination
-  // :
-  // {city: 'Paris', country: 'BB', currency: 'AMD'}
-  // end_date
-  // :
-  // "2025-02-28"
-  // events
-  // :
-  // null
-  // is_booked_hotel
-  // :
-  // null
-  // landmarks
-  // :
-  // null
-  // passport_issued_country
-  // :
-  // "AF"
-  // people_count
-  // :
-  // 1
-  // start_date
-  // :
-  // "2025-02-06"
-  // trip_id
-  // :
-  // 21
-  // user_id
-  // :
-  // 1
-  // visa_type
-  // :
-  // null
-  // weather
-  // :
-  // null
 })
 </script>
 
