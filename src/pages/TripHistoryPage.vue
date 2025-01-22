@@ -71,37 +71,7 @@
   <script lang="ts">
   import { defineComponent, ref, onMounted } from 'vue';
   import { getTripHistory } from './service/apiService';
-  
-
-  interface Destination {
-    city: string;
-    country: string;
-    currency: string;
-  }
-  
-  interface Weather {
-    weather_type: string;
-    temp: number;
-  }
-  
-  interface Budget {
-    current_amount: number;
-    current_currency: string;
-    destination_amount: number;
-    destination_currency: string;
-  }
-  
-  interface Trip {
-    trip_id: number;
-    destination: Destination;
-    start_date: string;
-    end_date: string;
-    weather: Weather;
-    budget: Budget;
-    landmarks: {
-      best_places_to_visit: string[];
-    };
-  }
+  import type { Trip } from '../types/index';
   
   export default defineComponent({
     name: 'HistoryOfTrips',
