@@ -2,10 +2,11 @@
 import { onMounted, ref } from 'vue';
 import { useRoute } from 'vue-router';
 import { costOfLiving, countriesCoordinates } from './data/data';
-// import type { TripReport } from '@/types/index';
 import { getVisaRequirements, getWeather } from './service/apiService';
+import * as L from 'leaflet';
 
 const route = useRoute();
+
 let countryName = ref('');
 let countryCode = ref('');
 let start = ref('');
@@ -75,6 +76,7 @@ onMounted(async () => {
   }
 
   sevenDayWeather.value = { temps: dayTemp, time: relativeToGMT };
+
   const arrOfTemp = Object.values(sevenDayWeather.value.temps);
   let total = 0;
   for (const value of arrOfTemp) {
@@ -88,19 +90,50 @@ onMounted(async () => {
   if (visaDuration === null) {
     visaDuration = 'Flexible';
   }
+
+  const map = L.map('map').setView(
+    countriesCoordinates[countryName.value] || [51.505, -0.09],
+    5,
+  );
+
+  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: 'Map data © <a href="https://www.openstreetmap.org/">OpenStreetMap</a>',
+  }).addTo(map);
+
+  if (countriesCoordinates[countryName.value]) {
+    L.marker(countriesCoordinates[countryName.value])
+      .addTo(map)
+      .bindPopup(`<b>${countryName.value}</b>`)
+      .openPopup();
+  }
 });
 </script>
 
 <template>
-  <div class="p-8 space-y-6 bg-gray-100 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold text-gray-800">Trip Report</h1>
+  <div class="p-8 space-y-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Trip Report</h1>
 
-    <div class="space-y-2">
-      <p class="text-lg font-medium">Destination: <span class="font-semibold">{{ countryName }} ({{ countryCode }})</span></p>
-      <p class="text-gray-600">{{ info }}</p>
+    <div class="p-4 bg-white dark:bg-gray-700 rounded shadow-md">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 flex items-center">
+        <svg class="w-5 h-5 mr-2 text-blue-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 2C9.243 2 7 4.243 7 7c0 1.157.488 2.198 1.272 2.928L12 15l3.728-5.072A3.001 3.001 0 0017 7c0-2.757-2.243-5-5-5zM12 19v3" />
+        </svg>
+        Destination
+      </h2>
+      <p class="text-lg font-medium text-gray-800 dark:text-gray-300"> {{ countryName }} ({{ countryCode }})</p>
+      <p class="text-gray-600 dark:text-gray-400 mt-1">{{ info }}</p>
+      <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+        Time relative to GMT: <span class="font-semibold">{{ sevenDayWeather.time }}</span>
+      </p>
     </div>
 
-    <div class="space-y-1">
+    <div class="p-4 bg-white dark:bg-gray-700 rounded shadow-md">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 flex items-center">
+        <svg class="w-5 h-5 mr-2 text-green-500" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c3.866 0 7-1.343 7-3M5 8c0 1.657 3.134 3 7 3s7-1.343 7-3M5 8v4c0 1.657 3.134 3 7 3s7-1.343 7-3V8M5 12v4c0 1.657 3.134 3 7 3s7-1.343 7-3v-4" />
+        </svg>
+        Budget Info
+      </h2>
       <p>Your maximum budget: <span class="font-semibold">{{ maxBudget }} {{ currentCurr }}</span></p>
       <p>Converted budget: <span class="font-semibold">{{ newMaxBudget }} {{ destinationCurr }}</span></p>
       <p>
@@ -111,24 +144,22 @@ onMounted(async () => {
       </p>
     </div>
 
-    <div class="space-y-1">
-      <p>Travel dates: <span class="font-semibold">{{ start }} to {{ end }}</span></p>
-      <p>Passport: <span class="font-semibold">{{ passport }}</span></p>
-      <p>Visa type required: <span class="font-semibold">{{ typeOfVisa }}</span></p>
-      <p>Visa duration: <span class="font-semibold">{{ visaDuration }}</span></p>
-      <p>Data last updated: <span class="font-semibold">{{ timeOfData }}</span></p>
-    </div>
-
-    <div>
-      <h2 class="text-xl font-semibold">7-Day Weather Forecast</h2>
-      <div class="grid grid-cols-1 gap-2 sm:grid-cols-2">
-        <div v-for="(temp, day) in sevenDayWeather.temps" :key="day" class="p-4 bg-white rounded shadow">
-          <p class="text-sm font-medium text-gray-700">{{ day }}:</p>
-          <p class="text-lg font-semibold text-blue-600">{{ temp }}&deg;C</p>
+    <div class="p-4 bg-white dark:bg-gray-700 rounded shadow-md">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">7-Day Weather Forecast</h2>
+      <div class="grid grid-cols-1 gap-4 sm:grid-cols-2 lg:grid-cols-3 mt-4">
+        <div v-for="(temp, day) in sevenDayWeather.temps" :key="day" class="p-4 bg-gray-100 dark:bg-gray-800 rounded shadow">
+          <p class="text-sm font-medium text-gray-700 dark:text-gray-300">{{ day }}</p>
+          <p class="text-lg font-semibold text-blue-600 dark:text-blue-400">{{ temp }}&deg;C</p>
         </div>
       </div>
-      <p class="mt-2 text-sm text-gray-600">Time relative to GMT: <span class="font-semibold">{{ sevenDayWeather.time }}</span></p>
-      <p class="text-sm">Average temperature during your visit: <span class="font-semibold">{{ averageTemp }}&deg;C</span></p>
+      <p class="mt-2 text-sm text-gray-600 dark:text-gray-400">
+        Average temperature: <span class="font-semibold">{{ averageTemp }}&deg;C</span>
+      </p>
+    </div>
+
+    <div class="p-4 bg-white dark:bg-gray-700 rounded shadow-md">
+      <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">Destination Map</h2>
+      <div id="map" class="w-full h-64 bg-gray-300 dark:bg-gray-600"></div>
     </div>
   </div>
 </template>

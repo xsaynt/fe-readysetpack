@@ -75,8 +75,8 @@ function goToChecklist() {
     <h3 class="text-xl font-semibold text-gray-800 dark:text-gray-200">
       {{ destination.city }}
     </h3>
-    <p class="text-gray-600 dark:text-gray-400">{{ start_date }}</p>
-    <p class="text-gray-600 dark:text-gray-400">{{ end_date }}</p>
+    <p class="text-gray-600 dark:text-gray-100">{{ start_date }}</p>
+    <p class="text-gray-600 dark:text-gray-100">{{ end_date }}</p>
     <div class="mt-4 flex gap-4">
       <button
         @click="goToTripReport"

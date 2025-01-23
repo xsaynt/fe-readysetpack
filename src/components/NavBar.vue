@@ -44,16 +44,16 @@ function toggleDropdown() {
             class="absolute right-0 mt-2 bg-background dark:bg-hover-dark shadow-md rounded-md w-40"
           >
             <li class="border-b border-accent dark:border-secondary">
-              <router-link to="/" class="block px-4 py-2 text-accent dark:text-background hover:bg-hover-light dark:hover:bg-hover-dark">Home</router-link>
+              <router-link to="/" class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark">Home</router-link>
             </li>
             <li class="border-b border-accent dark:border-secondary">
-              <router-link to="/current-trips" class="block px-4 py-2 text-accent dark:text-background hover:bg-hover-light dark:hover:bg-hover-dark">Current Trips</router-link>
+              <router-link to="/current-trips" class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark">Current Trips</router-link>
             </li>
             <li class="border-b border-accent dark:border-secondary">
-              <router-link to="/new-trip" class="block px-4 py-2 text-accent dark:text-background hover:bg-hover-light dark:hover:bg-hover-dark">Create New Trip</router-link>
+              <router-link to="/new-trip" class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark">Create New Trip</router-link>
             </li>
             <li>
-              <router-link to="/trip-history" class="block px-4 py-2 text-accent dark:text-background hover:bg-hover-light dark:hover:bg-hover-dark">Trip History</router-link>
+              <router-link to="/trip-history" class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark">Trip History</router-link>
             </li>
           </ul>
         </nav>

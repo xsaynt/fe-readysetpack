@@ -34,9 +34,9 @@
               </p>
               <p class="text-sm text-gray-500 dark:text-gray-400">{{ trip.destination.currency }}</p>
             </td>
-            <td class="px-4 py-2">{{ formatDate(trip.start_date) }}</td>
-            <td class="px-4 py-2">{{ formatDate(trip.end_date) }}</td>
-            <td class="px-4 py-2">
+            <td class="px-4 py-2 dark:text-gray-100">{{ formatDate(trip.start_date) }}</td>
+            <td class="px-4 py-2 dark:text-gray-100">{{ formatDate(trip.end_date) }}</td>
+            <td class="px-4 py-2 dark:text-gray-100">
               <p>{{ trip.budget.current_amount }} {{ trip.budget.current_currency }}</p>
               <p class="text-sm text-gray-500 dark:text-gray-400">
                 Converted: {{ trip.budget.destination_amount }}

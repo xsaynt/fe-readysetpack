@@ -18,7 +18,7 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-background dark:bg-highlight p-8">
+  <div class="min-h-screen bg-background dark:bg-gray-900 p-8">
     <h1 class="text-3xl font-bold text-accent dark:text-secondary mb-6">Current Trips</h1>
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
       <TripCard
