@@ -120,8 +120,8 @@
     });
 
       const formatDate = (dateString: string): string => {
-      const [year, month, day] = dateString.split('-'); // Split YYYY-MM-DD
-      return `${day}/${month}/${year}`; // Return DD/MM/YYYY
+      const [year, month, day] = dateString.split('-'); 
+      return `${day}/${month}/${year}`; 
     };
   
       onMounted(() => {
