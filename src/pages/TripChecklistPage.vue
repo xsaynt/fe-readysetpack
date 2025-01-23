@@ -30,8 +30,8 @@ function removeTask(index: number) {
 </script>
 
 <template>
-  <div class="p-6 bg-gray-100 min-h-screen">
-    <h1 class="text-2xl font-bold mb-4">Trip Checklist</h1>
+  <div class="p-6 bg-background dark:bg-gray-900 min-h-screen">
+    <h1 class="text-2xl font-bold text-accent dark:text-secondary mb-4">Trip Checklist</h1>
 
     <div class="mb-6 flex items-center gap-2">
       <input 

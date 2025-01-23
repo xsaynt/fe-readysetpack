@@ -110,8 +110,8 @@ onMounted(async () => {
 </script>
 
 <template>
-  <div class="p-8 space-y-6 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-md">
-    <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200">Trip Report</h1>
+  <div class="p-8 space-y-6 bg-background dark:bg-gray-900 rounded-lg shadow-md">
+    <h1 class="text-2xl font-bold text-accent dark:text-secondary">Trip Report</h1>
 
     <div class="p-4 bg-white dark:bg-gray-700 rounded shadow-md">
       <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 flex items-center">
@@ -134,15 +134,33 @@ onMounted(async () => {
         </svg>
         Budget Info
       </h2>
-      <p>Your maximum budget: <span class="font-semibold">{{ maxBudget }} {{ currentCurr }}</span></p>
-      <p>Converted budget: <span class="font-semibold">{{ newMaxBudget }} {{ destinationCurr }}</span></p>
-      <p>
-        Budget per person: <span class="font-semibold">{{ (newMaxBudget / travelers).toFixed(2) }} {{ destinationCurr }}</span>
+      <p class="dark:text-gray-200">Your maximum budget: <span class="font-semibold dark:text-gray-200">{{ maxBudget }} {{ currentCurr }}</span></p>
+      <p class="dark:text-gray-200">Converted budget: <span class="font-semibold dark:text-gray-200">{{ newMaxBudget }} {{ destinationCurr }}</span></p>
+      <p class="dark:text-gray-200">
+        Budget per person: <span class="font-semibold dark:text-gray-200">{{ (newMaxBudget / travelers).toFixed(2) }} {{ destinationCurr }}</span>
       </p>
-      <p>
-        Average daily cost of living in {{ countryName }}: <span class="font-semibold">{{ dailyCost }} {{ destinationCurr }}</span>
+      <p class="dark:text-gray-200">
+        Average daily cost of living in {{ countryName }}: <span class="font-semibold dark:text-gray-200">{{ dailyCost }} {{ destinationCurr }}</span>
       </p>
     </div>
+
+    <div class="p-4 bg-white dark:bg-gray-700 rounded shadow-md">
+  <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200 flex items-center">
+    <svg
+      class="w-5 h-5 mr-2 text-red-600" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M8 4h10a2 2 0 012 2v12a2 2 0 01-2 2H8m0-16a2 2 0 00-2 2v12a2 2 0 002 2m0-16v16m4-8h4"/>
+    </svg>
+    Visa Requirements
+  </h2>
+  <p class="text-lg text-gray-800 dark:text-gray-300" v-if="visaReq.data">
+    Visa Type: <span class="font-medium">{{ typeOfVisa }}</span><br />
+    Duration: <span class="font-medium">{{ visaDuration }}</span><br />
+    Last Updated: <span class="font-medium">{{ timeOfData }}</span>
+  </p>
+  <p class="text-gray-600 dark:text-gray-400 mt-1" v-else>
+    No visa information available for your passport.
+  </p>
+</div>
 
     <div class="p-4 bg-white dark:bg-gray-700 rounded shadow-md">
       <h2 class="text-xl font-semibold text-gray-800 dark:text-gray-200">7-Day Weather Forecast</h2>

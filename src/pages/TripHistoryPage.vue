@@ -1,6 +1,6 @@
 <template>
-  <div class="p-6 bg-gray-100 min-h-screen dark:bg-gray-900">
-    <h1 class="text-2xl font-bold text-gray-800 dark:text-gray-200 mb-4">History of Trips</h1>
+  <div class="p-6 min-h-screen bg-background dark:bg-gray-900">
+    <h1 class="text-2xl font-bold text-accent dark:text-secondary mb-4">History of Trips</h1>
 
     <div v-if="loading" class="text-center">
       <p class="text-gray-500 dark:text-gray-300">Loading trips...</p>
