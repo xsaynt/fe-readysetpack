@@ -11,7 +11,7 @@ const {
   passport_issued_country,
   budget,
   people_count,
-  city_information
+  city_information,
 } = defineProps({
   user_id: Number,
   trip_id: Number,
@@ -22,44 +22,43 @@ const {
   passport_issued_country: String,
   budget: Object,
   people_count: Number,
-  city_information: String
+  city_information: String,
 })
 
 const router = useRouter()
 
 function goToTripReport() {
-  console.log("user id is: ", user_id)
-  console.log("trip_id:", trip_id)
-  console.log("destination:", destination)
-  console.log("start_date:", start_date)
-  console.log("end_date:", end_date)
-  console.log("passport:", passport_issued_country)
-  console.log("budget:", budget.current_amount)
-  console.log("keys: ", Object.keys(budget))
-  console.log("current currency:", budget.current_currency)
-  console.log("amount_in_foreign_currency:", budget.destination_amount) // after converted
-  console.log("destination currency:", budget.destination_currency)
-  console.log("people_count:", people_count)
-  console.log("city info", city_information)
-
+  console.log('user id is: ', user_id)
+  console.log('trip_id:', trip_id)
+  console.log('destination:', destination)
+  console.log('start_date:', start_date)
+  console.log('end_date:', end_date)
+  console.log('passport:', passport_issued_country)
+  console.log('budget:', budget.current_amount)
+  console.log('keys: ', Object.keys(budget))
+  console.log('current currency:', budget.current_currency)
+  console.log('amount_in_foreign_currency:', budget.destination_amount)
+  console.log('destination currency:', budget.destination_currency)
+  console.log('people_count:', people_count)
+  console.log('city info', city_information)
 
   router.push({
     name: 'tripReport',
-    params: {trip_id, user_id},
-    query: { 
-      user_id, 
+    params: { trip_id, user_id },
+    query: {
+      user_id,
       trip_id,
       destinationFullName: destination.city,
-      destinationCode: destination.country, // unpack this
+      destinationCode: destination.country,
       start_date,
       end_date,
       passport_issued_country,
-      budget: budget.current_amount, 
-      convertedBudget: budget.destination_amount,// the actual budget
+      budget: budget.current_amount,
+      convertedBudget: budget.destination_amount,
       currCurrency: budget.current_currency,
       destCurrency: budget.destination_currency,
       people_count,
-      country_info: city_information
+      country_info: city_information,
     },
   })
 }

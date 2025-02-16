@@ -4,12 +4,9 @@
 
     <h2><strong>Visa Requirements</strong></h2>
 
-    <!-- If there is a failure to retrieve info -->
     <p v-if="errorMessage" style="color: red">{{ errorMessage }}</p>
 
-    <!-- Display info if no error -->
     <div v-else>
-      <!-- Check if visaReq is loaded before accessing properties -->
       <p
         v-if="
           visaReq && visaReq.destination && visaReq.passport && visaReq.category
@@ -74,7 +71,7 @@
 </template>
 
 <script lang="ts">
-import { getVisaRequirements, getWeather } from "../../service/apiService";
+import { getVisaRequirements, getWeather } from "../service/apiService";
 import type { AxiosResponse } from "axios";
 import { countries, currencies, coordinates } from "../data/data";
 
@@ -130,7 +127,6 @@ export default {
   },
 
   created() {
-    // Fetch the selected values from the query params
     const {
       departingFrom,
       currentPassport,
@@ -142,7 +138,6 @@ export default {
     } = this.$route.query;
     console.log(departingFrom, currentPassport, arrivingAt);
 
-    // Validate the form fields
     if (
       !departingFrom ||
       !currentPassport ||

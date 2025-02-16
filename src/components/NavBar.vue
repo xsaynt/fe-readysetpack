@@ -8,14 +8,16 @@ if (!darkMode) {
 }
 const { isDark, toggleDark } = darkMode
 
-const isDropdownOpen = ref(false);
+const isDropdownOpen = ref(false)
 function toggleDropdown() {
   isDropdownOpen.value = !isDropdownOpen.value
 }
 </script>
 
 <template>
-  <header class="flex justify-between items-center px-6 py-4 bg-primary dark:bg-highlight shadow-md">
+  <header
+    class="flex justify-between items-center px-6 py-4 bg-primary dark:bg-highlight shadow-md"
+  >
     <div class="flex items-center gap-4">
       <h1 class="text-xl font-bold text-accent dark:text-secondary">
         <router-link to="/">ReadySetPack</router-link>
@@ -44,16 +46,32 @@ function toggleDropdown() {
             class="absolute right-0 mt-2 bg-background dark:bg-hover-dark shadow-md rounded-md w-40"
           >
             <li class="border-b border-accent dark:border-secondary">
-              <router-link to="/" class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark">Home</router-link>
+              <router-link
+                to="/"
+                class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark"
+                >Home</router-link
+              >
             </li>
             <li class="border-b border-accent dark:border-secondary">
-              <router-link to="/current-trips" class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark">Current Trips</router-link>
+              <router-link
+                to="/current-trips"
+                class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark"
+                >Current Trips</router-link
+              >
             </li>
             <li class="border-b border-accent dark:border-secondary">
-              <router-link to="/new-trip" class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark">Create New Trip</router-link>
+              <router-link
+                to="/new-trip"
+                class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark"
+                >Create New Trip</router-link
+              >
             </li>
             <li>
-              <router-link to="/trip-history" class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark">Trip History</router-link>
+              <router-link
+                to="/trip-history"
+                class="block px-4 py-2 text-accent dark:text-accent hover:bg-hover-light dark:hover:bg-hover-dark"
+                >Trip History</router-link
+              >
             </li>
           </ul>
         </nav>
