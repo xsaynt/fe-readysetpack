@@ -42,4 +42,14 @@ export function getTripHistory(userId: number): Promise<AxiosResponse<unknown>> 
   return backendClient.get('/trips/1')
 }
 
-// export function updateChecklist(task)
+export function addChecklistItem({ task }: { task: string }): Promise<AxiosResponse<unknown>> {
+  return backendClient.patch('/checklists/1/1', {
+    task,
+  })
+}
+
+export function deleteChecklistItem({ task }: { task: string }): Promise<AxiosResponse<unknown>> {
+  return backendClient.patch('/checklists/1/1/delete-item', {
+    task,
+  })
+}
