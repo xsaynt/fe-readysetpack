@@ -1,39 +1,40 @@
-# fe-readysetpack
+# Welcome to my Travel Companion Front End Project!
 
-This template should help get you started developing with Vue 3 in Vite.
+This is my a project developed utilising TypeScript and Vue, built on and using the backend API I created previously to showcase a responsive, React based news website. Key features include:
 
-## Recommended IDE Setup
+- Accessible semantic HTML
+- Reactive elements built according to user stories
+- Reusable components
+- Implemented Vue Router for dynamic URLs
+- Loading state and optimistic rendering for enhanced UX
+- Both external and internal API's utilised for in-depth information
 
-[VSCode](https://code.visualstudio.com/) + [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) (and disable Vetur).
+The back end of the project can be found using the following link: [Travel Companion Backend](https://github.com/xsaynt/be-readysetpack).
 
-## Type Support for `.vue` Imports in TS
+The hosted site can be found using the following link: [Hosted Travel Companion Web App](https://readysetpack.netlify.app/)
 
-TypeScript cannot handle type information for `.vue` imports by default, so we replace the `tsc` CLI with `vue-tsc` for type checking. In editors, we need [Volar](https://marketplace.visualstudio.com/items?itemName=Vue.volar) to make the TypeScript language service aware of `.vue` types.
+(Please be patient as there may be a brief loading period for the sight to fully appear and for the trips to render.)
 
-## Customize configuration
+## Requirements for running locally
 
-See [Vite Configuration Reference](https://vite.dev/config/).
+`Node.js version v22.8.0 or later`
 
-## Project Setup
+## Setup
 
-```sh
-npm install
-```
+To clone the repository, start by clicking "Code" from my [GitHub](https://github.com/xsaynt/fe-readysetpack) and copy the given URL. Then enter the following in your terminal:
 
-### Compile and Hot-Reload for Development
+`git clone *copied URL*`
 
-```sh
-npm run dev
-```
+`code fe-readysetpack`
 
-### Type-Check, Compile and Minify for Production
+This will clone and open the new folder in VS Code.
 
-```sh
-npm run build
-```
+Once the repo has been cloned and is open in VS Code, run the following command to install the required dependencies:
 
-### Lint with [ESLint](https://eslint.org/)
+`npm install`
+You can then run the local development server with the command:
 
-```sh
-npm run lint
-```
+`npm run dev`
+Ctrl + click the localhost link in the terminal to open in your browser.
+
+### Thank you for viewing my project!
