@@ -41,3 +41,5 @@ export function getTripInfo(): Promise<AxiosResponse<unknown>> {
 export function getTripHistory(userId: number): Promise<AxiosResponse<unknown>> {
   return backendClient.get('/trips/1')
 }
+
+// export function updateChecklist(task)

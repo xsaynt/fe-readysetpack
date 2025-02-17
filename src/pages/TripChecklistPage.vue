@@ -1,15 +1,12 @@
 <script setup lang="ts">
 import { ref } from 'vue'
 
-const checklistItems = ref([
-  { task: 'Book flight tickets', completed: false },
-  { task: 'Reserve hotel accommodations', completed: false },
-  { task: 'Get travel insurance', completed: false },
-  { task: 'Prepare travel documents (passport, visa)', completed: false },
-  { task: 'Pack travel essentials', completed: false },
-  { task: 'Set up mobile data plan for travel', completed: false },
-  { task: 'Exchange currency', completed: false },
-])
+interface ChecklistItem {
+  task: string
+  completed: boolean
+}
+
+const checklistItems = ref<ChecklistItem[]>([])
 
 const newTask = ref('')
 
@@ -34,14 +31,14 @@ function removeTask(index: number) {
     <h1 class="text-2xl font-bold text-accent dark:text-secondary mb-4">Trip Checklist</h1>
 
     <div class="mb-6 flex items-center gap-2">
-      <input 
-        v-model="newTask" 
-        type="text" 
-        placeholder="Add a new task..." 
+      <input
+        v-model="newTask"
+        type="text"
+        placeholder="Add a new task..."
         class="flex-1 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
-      <button 
-        @click="addTask" 
+      <button
+        @click="addTask"
         class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
       >
         Add to Checklist
@@ -49,25 +46,25 @@ function removeTask(index: number) {
     </div>
 
     <ul class="space-y-4">
-      <li 
-        v-for="(item, index) in checklistItems" 
-        :key="index" 
+      <li
+        v-for="(item, index) in checklistItems"
+        :key="index"
         class="flex items-center justify-between p-4 border rounded-lg shadow-sm bg-white"
       >
         <div class="flex items-center gap-4">
-          <input 
-            type="checkbox" 
-            :checked="item.completed" 
-            @change="toggleCompletion(index)" 
+          <input
+            type="checkbox"
+            :checked="item.completed"
+            @change="toggleCompletion(index)"
             class="w-5 h-5 accent-blue-500 cursor-pointer"
           />
           <span :class="{ 'line-through text-gray-500': item.completed }">
             {{ item.task }}
           </span>
         </div>
-        
-        <button 
-          @click="removeTask(index)" 
+
+        <button
+          @click="removeTask(index)"
           class="w-8 h-8 flex items-center justify-center rounded-full bg-red-500 text-white hover:bg-red-600"
           aria-label="Remove task"
         >
