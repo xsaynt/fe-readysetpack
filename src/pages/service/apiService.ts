@@ -1,6 +1,11 @@
 import axios from 'axios'
 import type { AxiosResponse } from 'axios'
 
+interface ChecklistItem {
+  task: string
+  completed: boolean
+}
+
 const visaClient = axios.create({
   baseURL: 'https://rough-sun-2523.fly.dev/',
 })
@@ -42,14 +47,22 @@ export function getTripHistory(userId: number): Promise<AxiosResponse<unknown>> 
   return backendClient.get('/trips/1')
 }
 
-export function addChecklistItem({ task }: { task: string }): Promise<AxiosResponse<unknown>> {
-  return backendClient.patch('/checklists/1/1', {
-    task,
-  })
+export function getChecklistItems(): Promise<AxiosResponse<ChecklistItem[]>> {
+  return backendClient.get('/checklists/1/1')
 }
 
-export function deleteChecklistItem({ task }: { task: string }): Promise<AxiosResponse<unknown>> {
-  return backendClient.patch('/checklists/1/1/delete-item', {
-    task,
-  })
+export function addChecklistItem({
+  task,
+}: {
+  task: string
+}): Promise<AxiosResponse<ChecklistItem>> {
+  return backendClient.patch('/checklists/1/1', { task })
+}
+
+export function deleteChecklistItem({
+  task,
+}: {
+  task: string
+}): Promise<AxiosResponse<{ success: boolean }>> {
+  return backendClient.patch('/checklists/1/1/delete-item', { task })
 }

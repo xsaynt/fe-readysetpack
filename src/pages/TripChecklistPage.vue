@@ -1,5 +1,6 @@
 <script setup lang="ts">
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
+import { addChecklistItem, deleteChecklistItem, getChecklistItems } from './service/apiService'
 
 interface ChecklistItem {
   task: string
@@ -7,13 +8,18 @@ interface ChecklistItem {
 }
 
 const checklistItems = ref<ChecklistItem[]>([])
-
 const newTask = ref('')
 
-function addTask() {
+const addTask = async () => {
   if (newTask.value.trim()) {
-    checklistItems.value.push({ task: newTask.value.trim(), completed: false })
-    newTask.value = ''
+    try {
+      const response = await addChecklistItem({ task: newTask.value.trim() })
+      const addedTask: ChecklistItem = response.data
+      checklistItems.value.push(addedTask)
+      newTask.value = ''
+    } catch (err) {
+      console.error('Error adding task: ', err)
+    }
   }
 }
 
@@ -21,9 +27,31 @@ function toggleCompletion(index: number) {
   checklistItems.value[index].completed = !checklistItems.value[index].completed
 }
 
-function removeTask(index: number) {
-  checklistItems.value.splice(index, 1)
+const removeTask = async (index: number) => {
+  const removedTask = checklistItems.value[index].task
+  try {
+    const response = await deleteChecklistItem({ task: removedTask })
+
+    if (response.data.success) {
+      checklistItems.value.splice(index, 1)
+    } else {
+      console.error('Failed to delete task from the backend.')
+    }
+  } catch (err) {
+    console.error('Error removing task:', err)
+  }
 }
+
+const fetchChecklistItems = async () => {
+  try {
+    const response = await getChecklistItems()
+    checklistItems.value = response.data
+  } catch (err) {
+    console.error('Error fetching checklist items:', err)
+  }
+}
+
+onMounted(fetchChecklistItems)
 </script>
 
 <template>
@@ -38,7 +66,7 @@ function removeTask(index: number) {
         class="flex-1 px-4 py-2 border rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-500"
       />
       <button
-        @click="addTask"
+        @click="addTask()"
         class="px-4 py-2 bg-green-500 text-white rounded-lg hover:bg-green-600"
       >
         Add to Checklist
