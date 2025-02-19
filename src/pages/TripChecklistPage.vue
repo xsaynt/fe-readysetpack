@@ -14,8 +14,19 @@ const addTask = async () => {
   if (newTask.value.trim()) {
     try {
       const response = await addChecklistItem({ task: newTask.value.trim() })
-      const addedTask: ChecklistItem = response.data
-      checklistItems.value.push(addedTask)
+
+      console.log('Backend response:', JSON.stringify(response.data, null, 2))
+
+      if (
+        response.data &&
+        response.data.checklist &&
+        Array.isArray(response.data.checklist.items)
+      ) {
+        checklistItems.value = response.data.checklist.items
+      } else {
+        console.error('Invalid checklist structure:', response.data)
+      }
+
       newTask.value = ''
     } catch (err) {
       console.error('Error adding task: ', err)
@@ -23,17 +34,13 @@ const addTask = async () => {
   }
 }
 
-function toggleCompletion(index: number) {
-  checklistItems.value[index].completed = !checklistItems.value[index].completed
-}
-
 const removeTask = async (index: number) => {
   const removedTask = checklistItems.value[index].task
   try {
     const response = await deleteChecklistItem({ task: removedTask })
 
-    if (response.data.success) {
-      checklistItems.value.splice(index, 1)
+    if (response.data.checklist) {
+      checklistItems.value = response.data.checklist.items
     } else {
       console.error('Failed to delete task from the backend.')
     }
@@ -80,12 +87,6 @@ onMounted(fetchChecklistItems)
         class="flex items-center justify-between p-4 border rounded-lg shadow-sm bg-white"
       >
         <div class="flex items-center gap-4">
-          <input
-            type="checkbox"
-            :checked="item.completed"
-            @change="toggleCompletion(index)"
-            class="w-5 h-5 accent-blue-500 cursor-pointer"
-          />
           <span :class="{ 'line-through text-gray-500': item.completed }">
             {{ item.task }}
           </span>

@@ -6,6 +6,13 @@ interface ChecklistItem {
   completed: boolean
 }
 
+interface Checklist {
+  checklist_id: number
+  trip_id: number
+  user_id: number
+  items: ChecklistItem[]
+}
+
 const visaClient = axios.create({
   baseURL: 'https://rough-sun-2523.fly.dev/',
 })
@@ -55,14 +62,14 @@ export function addChecklistItem({
   task,
 }: {
   task: string
-}): Promise<AxiosResponse<ChecklistItem>> {
-  return backendClient.patch('/checklists/1/1', { task })
+}): Promise<AxiosResponse<{ checklist: Checklist }>> {
+  return backendClient.patch('/checklists/1/1', { newItem: { task } })
 }
 
 export function deleteChecklistItem({
   task,
 }: {
   task: string
-}): Promise<AxiosResponse<{ success: boolean }>> {
+}): Promise<AxiosResponse<{ checklist: Checklist }>> {
   return backendClient.patch('/checklists/1/1/delete-item', { task })
 }
