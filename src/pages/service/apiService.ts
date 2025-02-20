@@ -54,7 +54,7 @@ export function getTripHistory(userId: number): Promise<AxiosResponse<unknown>> 
   return backendClient.get('/trips/1')
 }
 
-export function getChecklistItems(): Promise<AxiosResponse<ChecklistItem[]>> {
+export function getChecklistItems(): Promise<AxiosResponse<{ checklist: Checklist }>> {
   return backendClient.get('/checklists/1/1')
 }
 

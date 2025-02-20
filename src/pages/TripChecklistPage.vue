@@ -52,9 +52,17 @@ const removeTask = async (index: number) => {
 const fetchChecklistItems = async () => {
   try {
     const response = await getChecklistItems()
-    checklistItems.value = response.data
+
+    console.log('Fetched checklist data:', response.data)
+
+    if (response.data.checklist.items && Array.isArray(response.data.checklist.items)) {
+      checklistItems.value = response.data.checklist.items
+    } else {
+      checklistItems.value = []
+    }
   } catch (err) {
     console.error('Error fetching checklist items:', err)
+    checklistItems.value = []
   }
 }
 
