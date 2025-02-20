@@ -60,7 +60,6 @@
         {{ weatherInfo.time }}
       </p>
 
-      <!-- Loading message while data is being fetched -->
       <p v-else>Loading information...</p>
     </div>
 
@@ -73,7 +72,7 @@
 <script lang="ts">
 import { getVisaRequirements, getWeather } from "../service/apiService";
 import type { AxiosResponse } from "axios";
-import { countries, currencies, coordinates } from "../data/data";
+import { countries, currencies, countriesCoordinates } from "../data/data";
 
 interface VisaReq {
   passport: {
@@ -112,7 +111,7 @@ export default {
   data() {
     return {
       countries: countries,
-      coordinates: coordinates,
+      coordinates: countriesCoordinates,
       currencies: currencies,
       visaReq: visaReq,
       departing: "",

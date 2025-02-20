@@ -20,6 +20,7 @@ const amountOfTravellers = ref('')
 const router = useRouter()
 async function handleFormSubmit() {
   const selectedCountryName = destination.value
+  console.log(typeof destination.value, destination.value)
 
   const newTrip = {
     destination: {
